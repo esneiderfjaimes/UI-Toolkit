@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.App" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:background">#fff</item>
+        <item name="android:statusBarColor">#fff</item>
+        <item name="android:navigationBarColor">#fff</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+</resources>
