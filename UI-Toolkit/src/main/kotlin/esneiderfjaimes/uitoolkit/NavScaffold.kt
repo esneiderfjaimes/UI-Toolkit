@@ -11,10 +11,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import esneiderfjaimes.uitoolkit.NavBarItem as RedNavBarItem
 import esneiderfjaimes.uitoolkit.utils.ClickPage
 import esneiderfjaimes.uitoolkit.utils.SetBarsColor
 import kotlinx.coroutines.launch
+import esneiderfjaimes.uitoolkit.NavBarItem as RedNavBarItem
 
 @Composable
 fun NavScaffold(
@@ -35,6 +35,41 @@ data class NavScaffoldOptions(
 )
 
 enum class LabelVisibility { SELECTED, LABELED, UNLABELED }
+
+@Composable
+fun NavigationBar(
+    navigations: List<NavItem>,
+    opts: NavScaffoldOptions = NavScaffoldOptions(),
+) {
+    val bottomBar: @Composable (Int, ClickPage) -> Unit = { indexSelected, onClick ->
+        if (opts.floatingBottomBar) {
+            FloatingNavigationBar {
+                BaseBottomBar(
+                    navigations,
+                    indexSelected = indexSelected,
+                    opts.forceExpansion, onClick = onClick
+                )
+            }
+        } else {
+            NavigationBar {
+                BaseBottomBar(
+                    navigations,
+                    indexSelected = indexSelected,
+                    opts.forceExpansion, onClick = onClick
+                )
+            }
+        }
+    }
+
+    if (opts.safeStateWithPager) {
+        val pagerState: PagerState = rememberPagerState()
+        val scope = rememberCoroutineScope()
+        bottomBar(pagerState.currentPage) { scope.launch { pagerState.scrollToPage(it) } }
+    } else {
+        var indexSelected by remember { mutableStateOf(0) }
+        bottomBar(indexSelected) { indexSelected = it }
+    }
+}
 
 @Composable
 private fun RedScaffoldBase(

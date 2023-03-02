@@ -3,7 +3,8 @@ package com.red.uitoolkit
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.red.uitoolkit.ui.DemoUIToolkitApp
+import androidx.compose.material3.Surface
+import com.red.uitoolkit.ui.DemoP1
 import com.red.uitoolkit.ui.theme.UIToolkitTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +12,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             UIToolkitTheme {
-                DemoUIToolkitApp()
+                Surface {
+                    DemoP1()
+                }
             }
         }
     }
